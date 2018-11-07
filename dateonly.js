@@ -1,17 +1,22 @@
+import moment from 'moment';
+
 (function(name, definition) {
   if (typeof module !== 'undefined') module.exports = definition();
-  else if (typeof define === 'function' && typeof define.amd === 'object') define(definition);
+  else if (typeof define === 'function' && typeof define.amd === 'object')
+    define(definition);
   else this[name] = definition();
-}('DateOnly', function() {
-  "use strict";
+})('DateOnly', function() {
+  'use strict';
 
   function DateOnly(date) {
     var val = null;
 
-    if (date instanceof String || typeof date === 'string') date = new Date(date);
-    if (date instanceof Number || typeof date === 'number') date = numberToDate(date);
-    if (date && date.constructor && date.constructor.name === 'DateOnly') date = date.toDate();
-    if (date && date.constructor && date.constructor.name === 'Moment') date = momentToDate(date);
+    if (date instanceof String || typeof date === 'string')
+      date = new Date(date);
+    if (date instanceof Number || typeof date === 'number')
+      date = numberToDate(date);
+    if (date && date instanceof DateOnly) date = date.toDate();
+    if (date && date instanceof moment) date = momentToDate(date);
     if (date instanceof Date) val = date;
 
     this.saveDateOnly(val || new Date());
@@ -64,7 +69,10 @@
       return NaN;
     }
 
-    return parseInt(pad(this.year, 4) + pad(this.month, 2) + pad(this.date, 2), 10);
+    return parseInt(
+      pad(this.year, 4) + pad(this.month, 2) + pad(this.date, 2),
+      10
+    );
   };
 
   DateOnly.prototype.toString = function() {
@@ -72,8 +80,10 @@
   };
 
   DateOnly.prototype.toISOString = function() {
-    return pad(this.year, 4) + '-' + pad(this.month + 1, 2) + '-' + pad(this.date, 2);
-  }
+    return (
+      pad(this.year, 4) + '-' + pad(this.month + 1, 2) + '-' + pad(this.date, 2)
+    );
+  };
 
   DateOnly.prototype.toJSON = function() {
     return this.valueOf();
@@ -120,4 +130,4 @@
   }
 
   return DateOnly;
-}));
+});

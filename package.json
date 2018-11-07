@@ -2,7 +2,9 @@
   "name": "dateonly",
   "version": "1.2.0",
   "description": "A JavaScript class that stores a date without a time.",
-  "dependencies": {},
+  "dependencies": {
+    "moment": "^2.22.1"
+  },
   "devDependencies": {
     "moment-timezone": "^0.3.0"
   },
